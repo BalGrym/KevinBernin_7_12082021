@@ -1,6 +1,14 @@
+const db = require('../models'); 
+const { Thread } = require('../models');
 
 exports.getAllThreads = (req, res, next) => {
-    res.json({ message: 'Tout les threads son reçu '});
+    Thread.findAll()
+    .then((threads) => {
+        res.send(threads)
+    })
+    .catch((err) => {
+       console.log(err); 
+    });
 };
 
 exports.getOneThread = (req, res, next) => {
@@ -8,7 +16,18 @@ exports.getOneThread = (req, res, next) => {
 };
 
 exports.createThread = (req, res, next) => {
-    res.json({ message: "création d'un thread"});
+    console.log(req.body);
+    const threadParsed = JSON.parse(req.body);
+    db.Thread.create({
+        articleTitle: threadParsed,
+        articleContent: threadParsed,
+    })
+    .then(threadCreated => res.send(threadCreated))
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    });
 };
 
 exports.modifyThread = (req, res, next) => {

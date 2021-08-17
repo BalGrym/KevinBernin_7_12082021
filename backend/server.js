@@ -1,6 +1,8 @@
 const http = require('http');
 const app = require('./app');
 
+const db = require('./models');
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -44,4 +46,7 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+db.sequelize.sync().then((req) => {
+  server.listen(port);
+});
+
