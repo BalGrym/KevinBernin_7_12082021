@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         articleContent: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
             validate: {
                 notEmpty: true

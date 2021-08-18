@@ -1,6 +1,7 @@
 const express = require('express');
 
 const threadRoutes = require('./routes/thread');
+const authRoutes = require('./routes/user');
 
 
 const app = express();
@@ -15,5 +16,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use('/api/threads', threadRoutes);
+app.use('/api/auth', authRoutes);
 
 module.exports = app;
