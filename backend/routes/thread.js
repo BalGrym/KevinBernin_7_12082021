@@ -9,5 +9,6 @@ router.get('/:id', auth, threadCtrl.getOneThread);
 router.post('/', auth, threadCtrl.createThread);
 router.put('/:id', auth, threadCtrl.modifyThread);
 router.delete('/:id', auth, threadCtrl.deleteThread)
+router.post('/:id/comment', auth,threadCtrl.createComment);
 
 module.exports = router;

@@ -27,7 +27,8 @@ exports.createThread = (req, res, next) => {
     // const threadParsed = JSON.parse(req.body);
     db.Thread.create({
         articleTitle: req.body.articleTitle,
-        articleContent: req.body.articleContent
+        articleContent: req.body.articleContent,
+        UserId: req.body.UserId
     })
     .then(threadCreated => res.send(threadCreated))
     .catch(err => {
@@ -68,3 +69,24 @@ exports.deleteThread = (req, res, next) => {
             }
         })
 }
+
+exports.createComment = (req, res, next) => {
+    db.Thread.findOne({ where: { id: req.params.id }})
+    .then(thread => {
+        db.Comment.create({
+            comment: req.body.comment,
+            ThreadId: req.params.id
+        })
+        .then(commentCreated => res.send(commentCreated))
+        .catch(err => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    })
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
