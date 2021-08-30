@@ -46,9 +46,6 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-db.Thread.belongsTo(db.User);
-db.Comment.belongsTo(db.Thread);
-
 db.sequelize.sync().then((req) => {
   server.listen(port);
 });

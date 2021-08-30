@@ -12,9 +12,11 @@ exports.getAllThreads = (req, res, next) => {
 };
 
 exports.getOneThread = (req, res, next) => {
-    // res.json({ message: 'un Thread reçu'});
-    db.Thread.findOne({ where: { id: req.params.id }})
-    .then(threadById => res.send(threadById))
+    let TdId = req.params.id;
+    db.Thread.findOne({ where: { id: TdId }})
+    .then(threadById => { 
+        res.send(threadById)
+    })
     .catch(err => {
         if (err) {
             console.log(err);
@@ -23,12 +25,10 @@ exports.getOneThread = (req, res, next) => {
 };
 
 exports.createThread = (req, res, next) => {
-    // console.log(req.body);
-    // const threadParsed = JSON.parse(req.body);
     db.Thread.create({
         articleTitle: req.body.articleTitle,
         articleContent: req.body.articleContent,
-        UserId: req.body.UserId
+        userId: req.body.userId
     })
     .then(threadCreated => res.send(threadCreated))
     .catch(err => {
@@ -39,28 +39,19 @@ exports.createThread = (req, res, next) => {
 };
 
 exports.modifyThread = (req, res, next) => {
-    // res.json({ message: "modification d'un thread"});
-    db.Thread.findOne({ where: { id: req.params.id }})
-    .then(threadById => threadById.update({
+    db.Thread.update({
         articleTitle: req.body.articleTitle,
         articleContent: req.body.articleContent
-    })
-        .then(ThreadModified => res.send(ThreadModified))
-        .catch(err => {
-            if (err) {
-                console.log(err);
-            }
-        })
-    )
+    }, { where: { id: req.params.id }})
+    .then(ThreadModified => res.send(ThreadModified))
     .catch(err => {
         if (err) {
             console.log(err);
         }
-    });
+    })
 }
 
 exports.deleteThread = (req, res, next) => {
-    // res.json({ message: "suppression d'un thread"});
     db.Thread.destroy({ where: { id: req.params.id }})
         .then(() => res.status(200).json({message: "Thread Deleted"}))
         .catch(err => {
@@ -71,13 +62,16 @@ exports.deleteThread = (req, res, next) => {
 }
 
 exports.createComment = (req, res, next) => {
-    db.Thread.findOne({ where: { id: req.params.id }})
-    .then(thread => {
+    let threadId = req.params.id;
+    console.log(threadId)
+    db.Thread.findOne({ where: { id: threadId }})
+    .then(thread => { 
         db.Comment.create({
             comment: req.body.comment,
-            ThreadId: req.params.id
+            userId: req.body.userId,
+            threadId: threadId
         })
-        .then(commentCreated => res.send(commentCreated))
+        .then(commentCreated => res.send(thread || commentCreated ))
         .catch(err => {
             if (err) {
                 console.log(err);
@@ -90,3 +84,23 @@ exports.createComment = (req, res, next) => {
         }
     });
 };
+
+exports.getCommentsByThreadId = (req, res, next) => {
+    let TdId = req.params.id;
+    db.Thread.findOne({ where: { id: TdId }})
+    .then(() => { 
+        db.Comment.findAll({ where: {threadId: TdId}})
+        .then((threadAndComments) => {
+            res.send( threadAndComments)
+            
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    })
+    .catch(err => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}

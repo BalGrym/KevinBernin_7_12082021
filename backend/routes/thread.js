@@ -4,11 +4,12 @@ const router = express.Router();
 const threadCtrl = require('../controllers/thread');
 const auth = require('../middleware/auth');
 
-router.get('/', auth, threadCtrl.getAllThreads);
-router.get('/:id', auth, threadCtrl.getOneThread);
-router.post('/', auth, threadCtrl.createThread);
-router.put('/:id', auth, threadCtrl.modifyThread);
-router.delete('/:id', auth, threadCtrl.deleteThread)
-router.post('/:id/comment', auth,threadCtrl.createComment);
+router.get('/', threadCtrl.getAllThreads);
+router.get('/:id', threadCtrl.getOneThread);
+router.post('/', threadCtrl.createThread);
+router.put('/:id', threadCtrl.modifyThread);
+router.delete('/:id', threadCtrl.deleteThread);
+router.post('/:id/comment', threadCtrl.createComment);
+router.get('/:id/comment', threadCtrl.getCommentsByThreadId)
 
 module.exports = router;
