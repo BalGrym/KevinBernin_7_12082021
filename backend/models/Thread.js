@@ -1,3 +1,5 @@
+// const User = require('./User');
+
 module.exports = (sequelize, DataTypes) => {
     const Thread = sequelize.define("Thread", {
         articleTitle: {
@@ -30,6 +32,6 @@ module.exports = (sequelize, DataTypes) => {
             } 
         }
     });
-
+    // User.hasMany(Thread, {foreignKey: 'userId'});
     return Thread;
 }

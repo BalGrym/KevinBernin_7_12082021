@@ -1,8 +1,11 @@
 const db = require('../models'); 
+const jwt = require ('jsonwebtoken');
 
 
 exports.getAllThreads = (req, res, next) => {
-    db.Thread.findAll()
+    db.Thread.findAll({
+        include: [db.User]
+    })
     .then((threads) => {
         res.send(threads)
     })
@@ -25,10 +28,13 @@ exports.getOneThread = (req, res, next) => {
 };
 
 exports.createThread = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+    const userId = decodedToken.userId;
     db.Thread.create({
         articleTitle: req.body.articleTitle,
         articleContent: req.body.articleContent,
-        userId: req.body.userId
+        userId: userId
     })
     .then(threadCreated => res.send(threadCreated))
     .catch(err => {
