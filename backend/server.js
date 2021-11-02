@@ -49,8 +49,10 @@ server.on('listening', () => {
 
 db.User.hasMany(db.Comment, {foreignKey: 'userId'});
 db.Thread.belongsTo(db.User, {foreignKey: 'userId'});
+
 db.Thread.hasMany(db.Comment, {foreignKey: 'threadId'});
 db.User.hasMany(db.Thread, {foreignKey: 'userId'});
+db.Comment.belongsTo(db.User, {foreignKey: 'userId'});
 
 db.sequelize.sync().then((req) => {
   server.listen(port);

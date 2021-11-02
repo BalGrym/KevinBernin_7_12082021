@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 
 const threadRoutes = require('./routes/thread');
 const authRoutes = require('./routes/user');
@@ -14,10 +15,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(helmet());
 app.use(express.json());
 
 app.use('/api/threads', threadRoutes);
-// app.use('/api/threads/:id/comment', commentRoutes);
+app.use('/api/threads/:id/comment', commentRoutes);
 app.use('/api/auth', authRoutes);
 
 module.exports = app;
