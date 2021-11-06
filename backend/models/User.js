@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(80),
             allowNull: false,
             validate: {
-                notEmpty: true
+                notEmpty: true,
+                // isLowercase: true,
+               
             }
         },
         role: {

@@ -16,14 +16,6 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
             }
         },
-        upVote: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
-        downVote: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,

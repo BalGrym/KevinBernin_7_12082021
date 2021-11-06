@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(express.json());
 
 app.use('/api/threads', threadRoutes);
-app.use('/api/threads/:id/comment', commentRoutes);
+app.use('/api/thread', commentRoutes);
 app.use('/api/auth', authRoutes);
 
 module.exports = app;

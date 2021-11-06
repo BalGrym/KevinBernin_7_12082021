@@ -16,7 +16,7 @@ exports.signup = (req, res, next) => {
         .catch(err => {
             if (err) {
                 console.log(err);
-                res.status(400).json({ err })
+                res.status(400).json({ error: 'Invalid Email' })
             }
         })
     })
