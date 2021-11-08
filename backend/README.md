@@ -5,7 +5,7 @@
 npm install
 ```
 ### Variable d'environnement
-Créez un dossier .env avec les informations suivantes (les * sont à remplacer par vos informations)
+Créez un fichier .env avec les informations suivantes (les * sont à remplacer par vos informations)
 ```
 DB_HOST=***
 DB_USER=***
